@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar }"></div>
+	<div class="container">
+		<p th:object=${serviceBook} th:text="*{serviceBookId} + ' space ' + *{mechanic.firstName} + ' ' + *{mechanic.lastName}">
+		
+		
+		<h3>Add Review</h3>
+		<!-- <form action="#" th:action="@{/saveReview(vehicleId=${review.vehicle.vehicleId})}" -->
+		<form action="#" th:action="@{/saveReview(vehicleId=${serviceBook.vehicle.vehicleId},
+													mechanicId=${serviceBook.mechanic.mechanicId})}"
+						th:object="${review}" method="POST">
+						
+			<!-- Add hidden form field to handle the update -->
+			<!-- <input type="hidden" th:field="*{dailyActivityId}"> 
+			<input type="hidden" th:field="${review.mechanic}">
+			<input type="hidden" th:field="${review.vehicle}">-->
+			<input type="hidden" th:field="${review.owner.ownerId}">
+
+			0-10
+			<input type="text" th:field="*{rating}" class="form-control mb-4 w-25" placeholder="rating" required>
+			<input type="text" th:field="*{comment}" class="form-control mb-4 w-25" placeholder="comments" required>
+			<input type="datetime-local" th:field="*{dtRec}" class="form-control mb-4 w-25" required>
+
+			
+			<button type="submit" class="btn btn-info col-2">Save</button>
+			
+		</form>
+		
+	</div>
+
+</body>
+</html>

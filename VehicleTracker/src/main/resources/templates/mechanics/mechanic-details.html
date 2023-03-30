@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<!-- Mechanic Details table -->
+<h3>Mechanic Details</h3>
+<hr>
+<div class="container">
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Phone Number</th>
+				<th>Workshop Name</th>
+				<th>Specialisation</th>
+				<th>Location</th>
+				<th>Rating</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:object="${mechanic}">
+				<td th:text="${mechanic.firstName}"/>
+				<td th:text="${mechanic.lastName}"/>
+				<td th:text="${mechanic.email}"/>
+				<td th:text="${mechanic.phoneNumber}"/>
+				<td th:text="${mechanic.workshopName}"/>
+				<td th:text="${mechanic.specialisation}"/>
+				<td th:text="${mechanic.mechanicLocations}"/>
+				<td th:text="${averageRating}"/>
+			</tr>
+		</tbody>
+		
+	</table>
+</div>
+
+
+<!-- TESTARW GIA PAGINATION -->
+
+<!-- Mechanic Reviews table -->
+<div class="container">
+	<h3>Mechanic Reviews</h3>
+	<hr>
+	<div th:if="${reviewsWithPage.totalElements==0}">
+		<h3> There is no Review for that Mechanic</h3>
+		<hr><hr><hr>
+	</div>
+	<div th:if="${reviewsWithPage.totalElements > 0}">
+		<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Rating</th>
+						<th>Comment</th>
+						<th>Reviewer</th>
+						<th>Vehicle</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="mechanicReview : ${reviewsWithPage}">
+						<td th:text="${mechanicReview.rating}"/>
+						<td th:text="${mechanicReview.comment}"/>
+						<td th:text="${mechanicReview.owner.firstName + ' ' + mechanicReview.owner.lastName}"/>
+						<td th:text="${mechanicReview.vehicle.make + ' ' + mechanicReview.vehicle.model}"/>
+						<td th:text="${#temporals.format(mechanicReview.dtRec, 'dd-MM-yyyy HH:mm')}"/>
+					</tr>
+				</tbody>
+				
+			</table>
+		
+		
+		<nav aria-label="Reviews navigation">
+		    <ul class="pagination">
+		        <li class="page-item" th:classappend="${reviewsWithPage.first ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${reviewsWithPage.number - 1}, vehiclesPage=${vehiclesWithPage.number})}"
+		               aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:each="i : ${#numbers.sequence(0, reviewsWithPage.totalPages - 1)}"
+		            th:classappend="${i == reviewsWithPage.number ? 'active' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${i}, vehiclesPage=${vehiclesWithPage.number})}"
+		               th:text="${i + 1}"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${reviewsWithPage.last ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${reviewsWithPage.number + 1}, vehiclesPage=${vehiclesWithPage.number})}"
+		               aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>
+	</div>
+</div>
+
+<div class="container">
+	<h3>Mechanic Schedule</h3>
+</div>
+
+
+
+<!-- Mechanic's Vehicles table -->
+<div class="container">
+	<hr>
+	<h3>Mechanic's Vehicles</h3>
+	<hr>
+	<div th:if="${vehiclesWithPage.totalElements > 0}">
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>Make</th>
+					<th>Model</th>
+					<th>License Plate</th>
+					<th>Production Date</th>
+					<th>Owner</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="vehicle : ${vehiclesWithPage}">
+					<td th:text="${vehicle.make}"/>
+					<td th:text="${vehicle.model}"/>
+					<td th:text="${vehicle.licensePlate}"/>
+					<td th:text="${vehicle.productionDate}"/>
+					<td>
+						<a th:href="@{/api/v1/owners/__${vehicle.owner.ownerId}__}" th:text="${vehicle.owner.firstName + ' ' + vehicle.owner.lastName}"/></a>
+					</td>
+					<td>
+	
+						<form id="vehicle-details-form" th:action="@{/api/v1/owners/__${vehicle.owner.ownerId}__/vehicles/__${vehicle.vehicleId}__}" method="post">
+						    <!-- Add a hidden form field for the fromMechanicPage flag -->
+						    <input type="hidden" name="fromMechanicPage" value="true" />
+						    <button type="submit" class="btn btn-primary btn-sm">View Details</button>
+						</form>
+						<!-- <a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/update}"
+							class="btn btn-info btn-sm"
+							>Update</a>
+						<a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/delete}" 
+							class="btn btn-danger btn-sm"
+							onclick="if (!(confirm('Are you sure you want to delete this vehicle?'))) return false;"
+							>Delete</a> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<nav aria-label="Vehicles navigation">
+		    <ul class="pagination">
+		        <li class="page-item" th:classappend="${vehiclesWithPage.first ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${reviewsWithPage.number}, vehiclesPage=${vehiclesWithPage.number - 1})}"
+		               aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:each="i : ${#numbers.sequence(0, vehiclesWithPage.totalPages - 1)}"
+		            th:classappend="${i == vehiclesWithPage.number ? 'active' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${reviewsWithPage.number}, vehiclesPage=${i})}"
+		               th:text="${i + 1}"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${vehiclesWithPage.last ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/mechanics/{mechanicId}(mechanicId=${mechanic.mechanicId}, reviewsPage=${reviewsWithPage.number}, vehiclesPage=${vehiclesWithPage.number + 1})}"
+		               aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>
+	</div>
+</div>
+
+</body>
+</html>

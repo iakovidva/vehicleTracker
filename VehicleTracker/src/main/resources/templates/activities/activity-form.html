@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+
+	<div class="container">
+				
+	<h3>Add activity for the vehicle <a th:object="${vehicle}" th:text="${vehicle.model}">  </a> </h3>
+	<form action="#" th:action="@{/api/v1/vehicles/activities/save(vehicleId=${vehicle.vehicleId})}"
+						th:object="${dailyActivity}" method="POST">
+						
+			<!-- Add hidden form field to handle the update -->
+			<input type="hidden" th:field="*{dailyActivityId}">
+			<input type="hidden" th:field="${vehicle.vehicleId}">
+			
+			<input type="text" th:field="*{activity}" class="form-control mb-4 w-25" placeholder="activity" required>
+			<input type="text" th:field="*{comments}" class="form-control mb-4 w-25" placeholder="comments" required>
+			<input type="text" th:field="*{cost}" class="form-control mb-4 w-25" placeholder="cost" required>
+			<input type="text" th:field="*{kilometers}" class="form-control mb-4 w-25" placeholder="Kilometers" required>
+			<input type="datetime-local" th:field="*{dt_rec}" class="form-control mb-4 w-25" required>
+
+			
+			<button type="submit" class="btn btn-info col-2">Save</button>
+			
+		</form>
+	</div>
+	
+</body>
+</html>

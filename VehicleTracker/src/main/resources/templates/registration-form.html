@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" th:href="@{/css/register-form.css}" />
+
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+<div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left" style="padding-top:20px">
+                        <h3>Welcome</h3>
+                        <p>You are 30 seconds away from earning your own money!</p>
+                        <a th:href="@{/login-form}">
+                        	<input type="submit" value="Login"/><br/>
+                        </a>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="owner-tab" data-toggle="tab" href="#owner" role="tab" aria-controls="owner" aria-selected="true">Owner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="mechanic-tab" data-toggle="tab" href="#mechanic" role="tab" aria-controls="mechanic" aria-selected="false">Mechanic</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="owner" role="tabpanel" aria-labelledby="owner-tab">
+                                <h3 class="register-heading">Register as an Owner</h3>
+                                <form action="#" th:action="@{api/v1/owners/add}" th:object="${owner}" method="POST">
+	                                <div class="row register-form">
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First Name *" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last Name *" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="text"  th:field="*{phoneNumber}" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Phone *" th:required="required"/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <input type="email"  th:field="*{email}" class="form-control" placeholder="Email *" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password *" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="password" th:field="*{password}" class="form-control"  placeholder="Confirm Password *" th:required="required"/>
+	                                        </div>
+	                                        
+	                                        <input type="submit" class="btnRegister"  value="Register"/>
+	                                    </div>
+	                                </div>
+	                        	</form>
+                            </div>
+                            <div class="tab-pane fade show" id="mechanic" role="tabpanel" aria-labelledby="mechanic-tab">
+                                <h3  class="register-heading">Register as a Mechanic</h3>
+                                <form action="#" th:action="@{api/v1/mechanics/add}" th:object="${mechanic}" method="POST">
+	                                <div class="row register-form">
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First Name *" value="" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last Name *" value="" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="text" th:field="*{phoneNumber}" maxlength="10" minlength="10" class="form-control" placeholder="Phone *" value="" th:required="required"/>
+	                                        </div>
+	                                    </div>
+	                                    <div class="col-md-6">
+	                                        <div class="form-group">
+	                                            <input type="email" th:field="*{email}" class="form-control" placeholder="Email *" value="" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password *" value="" th:required="required"/>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <input type="password" th:field="*{password}" class="form-control" placeholder="Confirm Password *" value="" th:required="required"/>
+	                                        </div>
+	                                        <input type="submit" class="btnRegister"  value="Register"/>
+	                                    </div>
+	                                </div>
+	                        	</form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+</body>
+</html>

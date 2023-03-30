@@ -1,0 +1,15 @@
+.navbar-icons{
+	width:20px;
+	height:20px;
+	margin:3px;
+}
+
+.mynavbar-margin{
+	margin-bottom:100px;
+}
+
+.navbar li.active,
+.navbar li:hover,
+.navbar li:active {
+  background-color: #ffc107; /* Change this to the desired color */
+}

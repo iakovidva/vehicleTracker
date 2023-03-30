@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+
+	<div class="container">
+				
+		<h3>Add vehicle for the <a th:object="${owner}" th:text="${owner.firstName}">  </a> </h3>
+		<form action="#" th:action="@{/api/v1/owners/__${owner.ownerId}__/vehicles/save}"
+						th:object="${vehicle}" method="POST">
+						
+			<!-- Add hidden form field to handle the update -->
+			<input type="hidden" th:field="*{vehicleId}">
+			<input type="hidden" th:field="*{dtEff}">
+			<input type="hidden" th:field="*{dtEnd}">
+			<input type="hidden" th:field="${owner.ownerId}">
+			
+			<input type="text" th:field="*{make}" class="form-control mb-4 w-25" placeholder="Make" required>
+			<input type="text" th:field="*{model}" class="form-control mb-4 w-25" placeholder="Model">
+			<input type="text" th:field="*{licensePlate}" class="form-control mb-4 w-25" placeholder="License Plate">
+			<input type="text" th:field="*{productionDate}" class="form-control mb-4 w-25" placeholder="Production Date">
+			
+			<button type="submit" class="btn btn-info col-2">Save</button>
+		</form>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:replace="~{fragments/navbar :: navbar }"></div>
+	<div class="container">
+		
+		<h3>Details for the vehicle:  <a th:object="${vehicle}" th:text="*{make} +' ' + *{model}">  </a> </h3>
+	
+		<!-- Daily activities -->
+		<hr>
+		<h3>Daily activities</h3>
+		<hr>
+		<div class="container">
+			
+			<div th:if="${fromMechanicPage}==false">
+				<a th:href="@{/api/v1/vehicles/activities/showFormForAdd(vehicleId=${vehicle.vehicleId})}"
+					class="btn btn-primary btn-sm mb-3">Add Activity</a>
+			</div>
+			
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Activity</th>
+						<th>Comments</th>
+						<th>Cost</th>
+						<th>Kilometers</th>
+						<th>Date</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="dailyActivity : ${vehicle.dailyActivities}">
+						<td th:text="${dailyActivity.activity}"/>
+						<td th:text="${dailyActivity.comments}"/>
+						<td th:text="${dailyActivity.cost}"/>
+						<td th:text="${dailyActivity.kilometers}"/>
+						<td th:text="${#temporals.format(dailyActivity.dt_rec, 'dd-MM-yyyy HH:mm')}"/>
+						<td>
+							<a th:href="@{/}"
+								class="btn btn-info btn-sm"
+								>Update</a>
+							<a th:href="@{/api/v1/vehicles/activities/deleteActivity(vehicleId=${vehicle.vehicleId}, activityId=${dailyActivity.dailyActivityId})}" 
+								class="btn btn-danger btn-sm"
+								onclick="(function() { if (!confirm('Are you sure you want to delete this activity?')) return false; })();"
+								>Delete</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
+		
+		
+		<!-- Service Book -->
+		<hr>
+		<h3>Service Book</h3>
+		<hr>
+		<div class="container">
+			
+			<div th:if="${fromMechanicPage}">
+				<a th:href="@{/api/v1/vehicles/servicebook/showFormForAdd(vehicleId=${vehicle.vehicleId})}"
+					class="btn btn-primary btn-sm mb-3">Add Job</a>
+			</div>
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Activity</th>
+						<th>Comments</th>
+						<th>Cost</th>
+						<th>Kilometers</th>
+						<th>Date</th>
+						<th>Mechanic</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="serviceBook : ${vehicle.serviceBooks}">
+						<td th:text="${serviceBook.activity}"/>
+						<td th:text="${serviceBook.comments}"/>
+						<td th:text="${serviceBook.cost}"/>
+						<td th:text="${serviceBook.kilometers}"/>
+						<td th:text="${#temporals.format(serviceBook.dt_rec, 'dd-MM-yyyy HH:mm')}"/>
+						<td>
+							<a th:href="@{/api/v1/mechanics/__${vehicle.mechanic.mechanicId}__}"
+								th:text="${vehicle.mechanic.firstName + ' ' + vehicle.mechanic.lastName}"/></a>
+						</td>
+						<td>
+							<a th:href="@{/}"
+								class="btn btn-info btn-sm"
+								>Update</a>
+							<a th:href="@{/api/v1/vehicles/servicebook/deleteServiceBook(vehicleId=${vehicle.vehicleId}, serviceBookId=${serviceBook.serviceBookId})}" 
+								class="btn btn-danger btn-sm"
+								onclick="(function() { if (!confirm('Are you sure you want to delete this service?')) return false; })();"
+								>Delete</a>					
+							<!-- If an owner want to leave a rating for a mechanic for a specific job -->
+								<!-- <a th:if="${fromMechanicPage}==false" th:href="@{/rating(serviceBookId=${serviceBook.serviceBookId}, vehicleId=${vehicle.vehicleId})}"
+									class="btn btn-primary btn-sm mb-3">Leave Rating</a> -->
+								<a th:if="${fromMechanicPage}==false" th:href="@{/rating(serviceBookId=${serviceBook.serviceBookId}, ownerId=${vehicle.owner.ownerId})}"
+									class="btn btn-primary btn-sm mb-3">Leave Rating</a>
+						</td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
+		
+	</div>
+
+</body>
+</html>

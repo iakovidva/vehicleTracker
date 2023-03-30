@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:fragment="navbar">
+<head>
+
+	<link rel="stylesheet" th:href="@{/css/navbar.css}" />
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
+ <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+
+</head>
+<div class="mynavbar-margin">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  
+    <a class="navbar-brand" th:href="@{/}">Vehicle Tracker</a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item ">
+        <a class="nav-link" th:href="@{/}"><img class="navbar-icons" th:src="@{/images/home_icon.png}" ></img>Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/api/v1/owners}"><img class="navbar-icons" th:src="@{/images/owner_icon.png}" ></img>Owners</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/api/v1/mechanics}"><img class="navbar-icons" th:src="@{/images/mechanic_icon.png}" ></img>Mechanics</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    	<li class="nav-item"><a class="nav-link" th:href="@{/registration-form}"><img class="navbar-icons" th:src="@{/images/register_icon.png}" ></img> Register </a></li>
+     	<li class="nav-item"><a class="nav-link" th:href="@{/login-form}"><img class="navbar-icons" th:src="@{/images/login_icon.png}"></img> Login </a></li>
+    </ul>
+
+</nav>
+</div>
+</html>

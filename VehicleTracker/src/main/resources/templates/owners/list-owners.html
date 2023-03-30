@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Listing all the owners! </title>
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+
+	<h3> Here will be all the owners </h3>
+<div class="container">
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Owner</th>
+				<th>Email</th>
+				<th>Phone Number</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="owner : ${owners}">
+				<td>
+					<a th:href="@{/api/v1/owners/__${owner.ownerId}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>
+				</td>
+				<td th:text="${owner.email}"/>
+				<td th:text="${owner.phoneNumber}"/>
+			</tr>
+		</tbody>
+		
+	</table>
+
+</div>
+</body>
+</html>

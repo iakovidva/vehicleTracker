@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+            
+
+<link rel="stylesheet" th:href="@{/css/login-form.css}" />
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar }"> </div>
+<div class="container login-container roundy-container">
+            <div class="row">
+                <div class="col-md-6 login-form-1 login-form-1-round">
+                    <h3>Are you an Owner?</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="ForgetPwd">Forget Password?</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 login-form-2 login-form-2-round">
+                    <h3>Are you a Mechanic?</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btnSubmit" value="Login" />
+                        </div>
+                        <div class="form-group">
+
+                            <a href="#" class="ForgetPwd" value="Login">Forget Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" style="justify-content: center" >
+           		<h3>New Owner or Mechanic?  <a th:href="@{/registration-form}">Register here</a> </h3>
+           </div>
+        </div>
+</body>
+</html>
