@@ -19,8 +19,6 @@ import com.vasileiosiakovidis.VehicleTracker.repositories.OwnerRepository;
 import com.vasileiosiakovidis.VehicleTracker.repositories.ServiceBookRepository;
 import com.vasileiosiakovidis.VehicleTracker.repositories.VehicleRepository;
 
-import jakarta.persistence.EntityManager;
-
 @Controller
 public class MechanicReviewController {
 
