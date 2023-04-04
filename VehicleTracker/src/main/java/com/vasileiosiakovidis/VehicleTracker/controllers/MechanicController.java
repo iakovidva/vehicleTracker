@@ -43,11 +43,6 @@ public class MechanicController {
 		this.vehicleRepository = vehicleRepository;
 	}
 	
-	/*
-	 * 1. Find all Mechanics
-	 * 2. Add mechanics as an attribute model
-	 * 3. Return the View: mechanics/list-mechanics
-	 */
 	@GetMapping("")
 	public String listMechanics(Model model) {
 		List<Mechanic> mechanics = mechanicRepository.findAll();
@@ -55,22 +50,19 @@ public class MechanicController {
 		return "mechanics/list-mechanics";
 	}
 	
-	/*
-	 * 1. @Valid check the validation rules defined in the Mechanic class
-	 * 2. Save the mechanic
-	 * 3. redirect to the main root, sending a Get request to ("/"). 
-	 */
 	@PostMapping("add")
 	public String addMechanic(@Valid @ModelAttribute("mechanic") Mechanic mechanic) {
 		mechanicRepository.save(mechanic);
 		return "redirect:/";
 	}
 	
-	/*
-	 * 1. Find the mechanic using the mechanicId
-	 * 2. Add mechanic to the model
-	 * 4. Return the View: mechanics/mechanic-details 
-	 */
+	@GetMapping("/{mechanicId}/delete")
+	public String deleteMechanic(@PathVariable("mechanicId") int mechanicId) {
+		mechanicRepository.deleteById(mechanicId);
+		return "redirect:/api/v1/mechanics";
+	}
+	
+	
 	@GetMapping("/{mechanicId}")
 	public String showMechanicDetails(@PathVariable("mechanicId") int mechanicId,
 									@RequestParam(name = "reviewsPage", defaultValue = "0") int reviewsPage,
@@ -87,10 +79,6 @@ public class MechanicController {
 		
 		model.addAttribute("averageRating", averageRating);
 
-//		List<MechanicReview> mechanicReviews = mechanic.getMechanicReviews();
-//		model.addAttribute("mechanicReviews",mechanicReviews);
-		
-		//
 		Pageable reviewsPageable = PageRequest.of(reviewsPage, 5, Sort.by("dtRec").descending());
         Pageable vehiclesPageable = PageRequest.of(vehiclesPage, 10, Sort.by("dtEff").descending());
 
@@ -107,7 +95,7 @@ public class MechanicController {
 	    
         model.addAttribute("reviewsWithPage", reviews);
         model.addAttribute("vehiclesWithPage", vehicles);
-        //
+
 		return "mechanics/mechanic-details";
 	}
 

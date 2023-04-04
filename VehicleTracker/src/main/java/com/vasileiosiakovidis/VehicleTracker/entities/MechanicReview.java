@@ -3,6 +3,7 @@ package com.vasileiosiakovidis.VehicleTracker.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -48,6 +50,11 @@ public class MechanicReview {
 	@JoinColumn(name = "vehicle_id")
 	@NotNull
 	private Vehicle vehicle;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="service_book_id")
+	@NotNull
+	private ServiceBook serviceBook;
 	
 	public MechanicReview() {
 		
@@ -116,6 +123,14 @@ public class MechanicReview {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+	
+	public ServiceBook getServiceBook() {
+		return serviceBook;
+	}
+
+	public void setServiceBook(ServiceBook serviceBook) {
+		this.serviceBook = serviceBook;
 	}
 
 	@Override

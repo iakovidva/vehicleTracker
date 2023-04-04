@@ -46,48 +46,34 @@ public class MechanicReviewController {
 	@GetMapping("/rating")
 	public String showRatingForm(@RequestParam("serviceBookId") int serviceBookId,
 			@RequestParam("ownerId") int ownerId,
-//								@RequestParam("vehicleId") int vehicleId,
 								Model model) {
 		ServiceBook serviceBook = serviceBookRepository.findById(serviceBookId).orElse(null); // mesw serviceBook vriskw vehicleId, mechanicId, 
 		MechanicReview review = new MechanicReview();
 		Owner owner = ownerRepository.findById(ownerId).orElse(null);
 		review.setOwner(owner);
+		review.setServiceBook(serviceBook);
 		model.addAttribute("serviceBook",serviceBook);
 		model.addAttribute("review",review);
+		
 		return "mechanicReviews/rating-form";
 	}
 	
 	@PostMapping("/saveReview")
 	public String saveReview(@ModelAttribute("review") MechanicReview review,
 							@RequestParam("vehicleId") int vehicleId,
-							@RequestParam("mechanicId") int mechanicId
-							) {
-		System.out.println("save clicked!");
+							@RequestParam("serviceBookId") int serviceBookId,
+							@RequestParam("mechanicId") int mechanicId) {
 		Vehicle vehicle = vehicleRepository.findById(vehicleId).orElse(null);
 		review.setVehicle(vehicle);
 		
 		Mechanic mechanic = mechanicRepository.findById(mechanicId).orElse(null);
 		review.setMechanic(mechanic);
 		
-//		review.setOwner(owner);
+		ServiceBook serviceBook = serviceBookRepository.findById(serviceBookId).orElse(null);
+		review.setServiceBook(serviceBook);
 		
 		mechanicReviewRepository.save(review);
-		return "redirect:/api/v1/mechanics";
+		return "redirect:/api/v1/mechanics/"+mechanicId;
 	}
-	
-	
-//	@PostMapping("/save")
-//	public String saveActivity(@ModelAttribute("dailyActivity") DailyActivity activity,
-//								@RequestParam("vehicleId") int vehicleId,
-//								RedirectAttributes redirectAttributes) {
-//		activity.setDt_rec(LocalDateTime.now());
-//		Vehicle vehicle = vehicleRepository.findById(vehicleId).orElse(null);
-//		vehicle.addDailyActivity(activity);
-//		activity.setVehicle(vehicle);
-//		
-//		activityRepository.save(activity);
-//		
-//		redirectAttributes.addFlashAttribute("fromMechanicPage", false);
-//		return "redirect:/api/v1/owners/"+vehicle.getOwner().getOwnerId()+"/vehicles/"+vehicleId;
-//	}
+
 }

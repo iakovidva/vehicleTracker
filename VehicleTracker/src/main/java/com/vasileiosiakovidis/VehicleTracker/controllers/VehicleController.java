@@ -36,13 +36,6 @@ public class VehicleController {
 		this.mechanicRepository = mechanicRepository;
 	}
 	
-	@GetMapping("/addVehicle")
-	public String addVehicle(@RequestParam("ownerId") int ownerId, Model model) {
-		model.addAttribute("ownerId",ownerId);
-		return "owners/owner-details";
-	}
-
-	
 	@GetMapping("/api/v1/owners/{ownerId}/vehicles/add")
 	public String formForAddVehicle(@PathVariable("ownerId") int ownerId, Model model) {
 		Owner owner = ownerRepository.findById(ownerId).orElse(null);
@@ -92,7 +85,7 @@ public class VehicleController {
 	}
 	
 	@GetMapping("/api/v1/owners/{ownerId}/vehicles/{vehicleId}/delete")
-	public String newDeleteVehicle(@PathVariable("vehicleId") int vehicleId,
+	public String deleteVehicle(@PathVariable("vehicleId") int vehicleId,
 								@PathVariable("ownerId") int ownerId) {
 		vehicleRepository.deleteById(vehicleId);
 		return "redirect:/api/v1/owners/"+ownerId;

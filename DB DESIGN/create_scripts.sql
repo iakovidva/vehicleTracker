@@ -90,6 +90,7 @@ CREATE TABLE mechanic_review(
 	mechanic_id INT NOT NULL,
 	owner_id INT NOT NULL,
 	vehicle_id INT NOT NULL,
+	service_book_id INT NOT NULL,
 	PRIMARY KEY (review_id),
 	CONSTRAINT FK_MECHANIC_REVIEW
 		FOREIGN KEY (mechanic_id) REFERENCES mechanic(mechanic_id)
@@ -99,7 +100,10 @@ CREATE TABLE mechanic_review(
         ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT FK_VEHICLE_REVIEW
 		FOREIGN KEY (vehicle_id) REFERENCES vehicle(vehicle_id)
-        ON DELETE NO ACTION ON UPDATE NO ACTION
+        ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_SERVICE_BOOK_REVIEW
+		FOREIGN KEY (service_book_id) REFERENCES service_book(service_book_id)
+        ON DELETE NO ACTION ON UPDATE NO ACTION    
 );
 
 DROP TABLE IF EXISTS mechanic_schedule;

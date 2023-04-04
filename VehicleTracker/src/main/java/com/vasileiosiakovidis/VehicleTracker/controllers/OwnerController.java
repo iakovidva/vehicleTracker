@@ -32,12 +32,7 @@ public class OwnerController {
 		this.ownerRepository = ownerRepository;
 		this.mechanicRepository = mechanicRepository;
 	}
-	
-	/*
-	 * 1. Find all Owners
-	 * 2. Add owners as an attribute model
-	 * 3. Return the View: owners/list-owners
-	 */
+
 	@GetMapping("")
 	public String listOwners(Model model) {
 		List<Owner> owners = ownerRepository.findAll();
@@ -45,23 +40,12 @@ public class OwnerController {
 		return "owners/list-owners";
 	}
 	
-	/*
-	 * 1. @Valid check the validation rules defined in the Owner class
-	 * 2. Save the owner
-	 * 3. redirect to the main root, sending a Get request to ("/"). 
-	 */
 	@PostMapping("add")
 	public String addOwner(@Valid @ModelAttribute("owner") Owner owner) {
 		ownerRepository.save(owner);
 		return "redirect:/";
 	}
 	
-	/*
-	 * 1. Find the owner using the ownerId
-	 * 2. Find all Mechanics
-	 * 3. Add owner and Mechanics to the model
-	 * 4. Return the View: owners/owner-details
-	 */
 	@GetMapping("/{ownerId}")
 	public String showOwnerDetails(@PathVariable("ownerId") int ownerId, Model model) {
 		Owner owner = ownerRepository.findById(ownerId).orElse(null);
@@ -69,5 +53,11 @@ public class OwnerController {
 		model.addAttribute("owner",owner);
 		model.addAttribute("mechanics",mechanics);		
 		return "owners/owner-details";
+	}
+	
+	@GetMapping("/{ownerId}/delete")
+	public String deleteOwner(@PathVariable("ownerId") int ownerId) {
+		ownerRepository.deleteById(ownerId);
+		return "redirect:/api/v1/owners";
 	}
 }

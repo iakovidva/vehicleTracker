@@ -91,18 +91,17 @@
 								th:text="${vehicle.mechanic.firstName + ' ' + vehicle.mechanic.lastName}"/></a>
 						</td>
 						<td>
-							<a th:href="@{/}"
-								class="btn btn-info btn-sm"
-								>Update</a>
-							<a th:href="@{/api/v1/vehicles/servicebook/deleteServiceBook(vehicleId=${vehicle.vehicleId}, serviceBookId=${serviceBook.serviceBookId})}" 
-								class="btn btn-danger btn-sm"
-								onclick="(function() { if (!confirm('Are you sure you want to delete this service?')) return false; })();"
-								>Delete</a>					
-							<!-- If an owner want to leave a rating for a mechanic for a specific job -->
-								<!-- <a th:if="${fromMechanicPage}==false" th:href="@{/rating(serviceBookId=${serviceBook.serviceBookId}, vehicleId=${vehicle.vehicleId})}"
-									class="btn btn-primary btn-sm mb-3">Leave Rating</a> -->
+							<div style="display: flex; gap: 5px;">
+								<a th:href="@{/}"
+									class="btn btn-info btn-sm"
+									>Update</a>
+								<a th:href="@{/api/v1/vehicles/servicebook/deleteServiceBook(vehicleId=${vehicle.vehicleId}, serviceBookId=${serviceBook.serviceBookId})}" 
+									class="btn btn-danger btn-sm"
+									onclick="(function() { if (!confirm('Are you sure you want to delete this service?')) return false; })();"
+									>Delete</a>
 								<a th:if="${fromMechanicPage}==false" th:href="@{/rating(serviceBookId=${serviceBook.serviceBookId}, ownerId=${vehicle.owner.ownerId})}"
-									class="btn btn-primary btn-sm mb-3">Leave Rating</a>
+									class="btn btn-primary btn-sm">Leave Rating</a>
+							</div>
 						</td>
 					</tr>
 				</tbody>

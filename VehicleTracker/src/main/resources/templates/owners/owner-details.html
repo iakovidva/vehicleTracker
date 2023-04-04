@@ -65,50 +65,26 @@
 				<td th:text="${vehicle.model}"/>
 				<td th:text="${vehicle.licensePlate}"/>
 				<td th:text="${vehicle.productionDate}"/>
-				<!-- <td th:text="${vehicle.mechanic != null ? vehicle.mechanic : 'Or Add one!'}" /> -->
-				<td>
+				<td th:text="${vehicle.mechanic != null ? vehicle.mechanic.firstName + ' ' + vehicle.mechanic.lastName : '-'}"/>
 				
-				  <span th:if="${vehicle.mechanic != null}" th:text="${vehicle.mechanic.firstName}"></span>
-				  	
-				  	<form th:if="${vehicle.mechanic == null}" th:action="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/saveMechanic}" method="post">
-				  	<select  class="form-control" id="dropDownList">
-					    <option value="0">-</option>
-					    <option th:each="mechanic : ${mechanics}" th:value="${mechanic.mechanicId}"
-					    	th:text="${mechanic.firstName} + ' ' + ${mechanic.lastName}">
-					    </option>
-					</select>
-					  	<input type="hidden" name="selectedMechanic" id="selectedMechanic" />
-  						<button type="submit" class="btn btn-primary btn-sm" onclick="setSelectedMechanic()">Save Mechanic</button>
-				  	</form> 
-				  	<!-- <form th:action="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/saveMechanic}" method="post">
-				  	<select class="form-control" id="dropDownList">
-					    <option th:text="${vehicle.mechanic.firstName} + ' ' + ${vehicle.mechanic.lastName}"></option>
-					    <option th:each="mechanic : ${mechanics}" th:value="${mechanic.mechanicId}"
-					    	th:text="${mechanic.firstName} + ' ' + ${mechanic.lastName}">
-					    </option>
-					</select>
-					  	<input type="hidden" name="selectedMechanic" id="selectedMechanic" />
-  						<button type="submit" class="btn btn-primary btn-sm" onclick="setSelectedMechanic()">Save Mechanic</button>
-				  	</form> -->
-				  	
-				</td>
 				<td>
-					<form id="vehicle-details-form" th:action="@{/api/v1/owners/__${vehicle.owner.ownerId}__/vehicles/__${vehicle.vehicleId}__}" method="post">
-					    <!-- Add a hidden form field for the fromMechanicPage flag -->
-					    <input type="hidden" name="fromMechanicPage" value="false" />
-					    <button type="submit" class="btn btn-primary btn-sm">Details</button>
-					</form>
-					<a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/update}"
-						class="btn btn-info btn-sm"
-						>Update</a>
-					<a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/delete}" 
-						class="btn btn-danger btn-sm"
-						onclick="(function() { if (!confirm('Are you sure you want to delete this vehicle?')) return false; })();"
-						>Delete</a>
+					<div style="display: flex; gap: 5px;">
+						<form id="vehicle-details-form" th:action="@{/api/v1/owners/__${vehicle.owner.ownerId}__/vehicles/__${vehicle.vehicleId}__}" method="post">
+						    <!-- Add a hidden form field for the fromMechanicPage flag -->
+						    <input type="hidden" name="fromMechanicPage" value="false" />
+						    <button type="submit" class="btn btn-primary btn-sm">Details</button>
+						</form>
+						<a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/update}"
+							class="btn btn-info btn-sm"
+							>Update</a>
+						<a th:href="@{/api/v1/owners/__${owner.ownerId}__/vehicles/__${vehicle.vehicleId}__/delete}" 
+							class="btn btn-danger btn-sm"
+							onclick="(function() { if (!confirm('Are you sure you want to delete this vehicle?')) return false; })();"
+							>Delete</a>
+					</div>
 				</td>
 			</tr>
 		</tbody>
-		
 	</table>
 </div>
 

@@ -31,12 +31,6 @@ public class DailyActivityController {
 		this.vehicleRepository = vehicleRepository;
 	}
 	
-	/*
-	 * 1. Find the vehicle to add an activity by vehicleId
-	 * 2. Create new DailyActivity object 
-	 * 3. Add vehicle and activity to the model
-	 * 4. Return the View activities/activity-form
-	 */
 	@GetMapping("/showFormForAdd")
 	public String showFormForAddActivity(@RequestParam("vehicleId") int vehicleId, Model model) {
 		Vehicle vehicle = vehicleRepository.findById(vehicleId).orElse(null);
@@ -48,14 +42,6 @@ public class DailyActivityController {
 		return "activities/activity-form";
 	}
 	
-	/*
-	 * 1. Find the vehicle to save the activity by vehicleId
-	 * 2. Add the activity to the vehicle
-	 * 3. Associate the activity with the current vehicle
-	 * 4. Save the activity
-	 * 5. Add redirect attribute "fromMechanicPage"=false
-	 * 6. Send GET request to the "redirect:/api/v1/owners/"+vehicle.getOwner().getOwnerId()+"/vehicles/"+vehicleId
-	 */
 	@PostMapping("/save")
 	public String saveActivity(@ModelAttribute("dailyActivity") DailyActivity activity,
 								@RequestParam("vehicleId") int vehicleId,
@@ -71,13 +57,6 @@ public class DailyActivityController {
 		return "redirect:/api/v1/owners/"+vehicle.getOwner().getOwnerId()+"/vehicles/"+vehicleId;
 	}
 	
-	/*
-	 * 1. Accept the vehicleId, avtivityId by the vehicle-details.html
-	 * 2. Find the vehicle to build the redirect link
-	 * 3. Delete the activity
-	 * 4. Add redirect attribute "fromMechanicPage"=false
-	 * 5. Send GET request to the "redirect:/api/v1/owners/"+vehicle.getOwner().getOwnerId()+"/vehicles/"+vehicleId
-	 */
 	@GetMapping("/deleteActivity")
 	public String deleteActivity(@RequestParam("vehicleId") int vehicleId,
 								@RequestParam("activityId") int activityId,

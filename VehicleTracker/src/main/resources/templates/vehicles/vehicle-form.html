@@ -23,7 +23,12 @@
 			<input type="text" th:field="*{model}" class="form-control mb-4 w-25" placeholder="Model">
 			<input type="text" th:field="*{licensePlate}" class="form-control mb-4 w-25" placeholder="License Plate">
 			<input type="text" th:field="*{productionDate}" class="form-control mb-4 w-25" placeholder="Production Date">
-			
+			<select  th:field="*{mechanic}"  class="form-control mb-4 w-25" id="dropDownList">
+			    <option value="0">-</option>
+			    <option th:each="mechanic : ${mechanics}" th:value="${mechanic.mechanicId}"
+			    	th:text="${mechanic.firstName} + ' ' + ${mechanic.lastName}">
+			    </option>
+			</select>
 			<button type="submit" class="btn btn-info col-2">Save</button>
 		</form>
 	</div>
