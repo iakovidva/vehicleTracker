@@ -21,7 +21,7 @@
 		</thead>
 		
 		<tbody>
-			<tr th:each="owner : ${owners}">
+			<tr th:each="owner : ${ownersWithPage}">
 				<td>
 					<a th:href="@{/api/v1/owners/__${owner.ownerId}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>
 				</td>
@@ -37,6 +37,28 @@
 		</tbody>
 		
 	</table>
+	<nav aria-label="Owners navigation">
+		    <ul class="pagination">
+		        <li class="page-item" th:classappend="${ownersWithPage.first ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/owners(ownersPage=${ownersWithPage.number-1})}"
+		               aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:each="i : ${#numbers.sequence(0, ownersWithPage.totalPages - 1)}"
+		            th:classappend="${i == ownersWithPage.number ? 'active' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/owners(ownersPage=${i})}"
+		               th:text="${i + 1}"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${ownersWithPage.last ? 'disabled' : ''}">
+		            <a class="page-link" th:href="@{/api/v1/owners(ownersPage=${ownersWithPage.number+1})}"
+
+		               aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>
 
 </div>
 </body>

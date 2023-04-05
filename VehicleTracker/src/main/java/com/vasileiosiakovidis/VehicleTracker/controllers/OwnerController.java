@@ -3,6 +3,10 @@ package com.vasileiosiakovidis.VehicleTracker.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vasileiosiakovidis.VehicleTracker.entities.Mechanic;
 import com.vasileiosiakovidis.VehicleTracker.entities.Owner;
@@ -34,9 +39,13 @@ public class OwnerController {
 	}
 
 	@GetMapping("")
-	public String listOwners(Model model) {
-		List<Owner> owners = ownerRepository.findAll();
-		model.addAttribute("owners", owners);
+	public String listOwners(@RequestParam(name = "ownersPage", defaultValue = "0") int ownersPage, Model model) {
+		Pageable ownersPageable = PageRequest.of(ownersPage, 5, Sort.by("lastName").ascending());
+		Page<Owner> ownersWithPage = ownerRepository.findAll(ownersPageable);
+		if (ownersWithPage == null) {
+			ownersWithPage = Page.empty(ownersPageable);
+	    }
+		model.addAttribute("ownersWithPage", ownersWithPage);
 		return "owners/list-owners";
 	}
 	
