@@ -3,6 +3,7 @@ package com.vasileiosiakovidis.VehicleTracker.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -10,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="mechanic_location")
+@IdClass(MechanicLocation.class)
 public class MechanicLocation {
 	
 	@Id

@@ -212,9 +212,8 @@ public class Vehicle {
 
 	@Override
 	public String toString() {
-		return "Vehicle [vehicleId=" + vehicleId + ", make=" + make + ", model=" + model + ", licencePlate="
-				+ licensePlate + ", productionDate=" + productionDate + ", owner=" + owner + ", mechanic=" + mechanic
-				+ ", dtEff=" + dtEff + ", dtEnd=" + dtEnd + ", mechanicReviews=" + mechanicReviews + "]";
-	}
-	
+	    return "Vehicle [vehicleId=" + vehicleId + ", make=" + make + ", model=" + model + ", licencePlate="
+	            + licensePlate + ", productionDate=" + productionDate
+	            + ", dtEff=" + dtEff + ", dtEnd=" + dtEnd + "]";
+	}	
 }

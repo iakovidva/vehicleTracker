@@ -99,4 +99,17 @@ public class MechanicController {
 		return "mechanics/mechanic-details";
 	}
 
+	@GetMapping("/{mechanicId}/update")
+	public String formForUpdateMechanic(@PathVariable("mechanicId") int mechanicId,Model model) {
+		Mechanic mechanic = mechanicRepository.findById(mechanicId).orElse(null);
+		model.addAttribute("mechanic",mechanic);
+		return "mechanics/mechanic-form-update";
+	}
+	
+	@PostMapping("/{mechanicId}/update")
+	public String updateMechanic(@PathVariable("mechanicId") int mechanicId,
+								@ModelAttribute("mechanic") Mechanic mechanic) {
+		mechanicRepository.save(mechanic);
+		return "redirect:/api/v1/mechanics/"+mechanicId;
+	}
 }

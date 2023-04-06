@@ -172,9 +172,7 @@ public class Mechanic extends Person {
 
 	@Override
 	public String toString() {
-		return "Mechanic [mechanicId=" + mechanicId + ", vehicles=" + vehicles + ", mechanicReviews=" + mechanicReviews
-				+ ", serviceBooks=" + serviceBooks + ", mechanicSchedules=" + mechanicSchedules + ", mechanicLocations="
-				+ mechanicLocations + ", workshopName=" + workshopName + ", specialisation=" + specialisation
-				+ ", toString()=" + super.toString() + "]";
+	    return "Mechanic [mechanicId=" + mechanicId + ", workshopName=" + workshopName + ", specialisation=" + specialisation
+	            + ", toString()=" + super.toString() + "]";
 	}	
 }

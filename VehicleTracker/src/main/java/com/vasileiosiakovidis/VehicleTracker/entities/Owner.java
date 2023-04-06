@@ -87,8 +87,6 @@ public class Owner extends Person {
 
 	@Override
 	public String toString() {
-		return "Owner [ownerId=" + ownerId + ", vehicles=" + vehicles + ", mechanicReviews=" + mechanicReviews
-				+ ", toString()=" + super.toString() + "]";
+	    return "Owner [ownerId=" + ownerId + ", toString()=" + super.toString() + "]";
 	}
-
 }
